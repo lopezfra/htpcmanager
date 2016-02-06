@@ -186,6 +186,9 @@ function loadRecentMoviesList() {
       return
     }
     $.each(result.movies, function(i, item) {
+
+      var fanart = WEBDIR + 'kodi/GetThumb?h=240&w=430&thumb=' + encodeURIComponent(item.fanart)
+
       $('#latestmovieslist_table_body').append(
         $('<tr>').append(
           $('<td>').html(item.title),
