@@ -172,6 +172,30 @@ function loadRecentMovies() {
   })
 }
 
+function loadRecentMoviesList() {
+  if (!$('#latestmovieslist_table_body').length) return
+  $.getJSON(WEBDIR + 'kodi/GetRecentMovies', function(result) {
+    if (result.movies[0] == null) {
+      $('#latestmovieslist_table_body').append(
+        $('<tr>').append($('<td>').html('No latest movies found').attr('colspan', '2')),
+        $('<tr>').append($('<td>').html('&nbsp;').attr('colspan', '2')),
+        $('<tr>').append($('<td>').html('&nbsp;').attr('colspan', '2')),
+        $('<tr>').append($('<td>').html('&nbsp;').attr('colspan', '2')),
+        $('<tr>').append($('<td>').html('&nbsp;').attr('colspan', '2'))
+      )
+      return
+    }
+    $.each(result.movies, function(i, item) {
+      $('#latestmovieslist_table_body').append(
+        $('<tr>').append(
+          $('<td>').html(item.title),
+          $('<td>').append($('<div class="pull-right">').html(item.year))
+        )
+      )
+    })
+  })
+}
+
 function loadRecentTVshows() {
   if (!$('#tvshow-carousel').length) return
   $.getJSON(WEBDIR + 'kodi/GetRecentShows', function(data) {
