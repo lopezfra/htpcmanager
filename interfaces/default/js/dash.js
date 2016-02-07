@@ -234,6 +234,30 @@ function loadRecentTVshows() {
   })
 }
 
+function loadRecentTVshowsList() {
+  if (!$('#latestmovieslist_table_body').length) return
+  $.getJSON(WEBDIR + 'kodi/GetRecentShows', function(result) {
+    if (result.episodes[0] == null) {
+      $('#latesttvlist_table_body').append(
+        $('<tr>').append($('<td>').html('No latest tv shows found').attr('colspan', '2')),
+        $('<tr>').append($('<td>').html('&nbsp;').attr('colspan', '2')),
+        $('<tr>').append($('<td>').html('&nbsp;').attr('colspan', '2')),
+        $('<tr>').append($('<td>').html('&nbsp;').attr('colspan', '2')),
+        $('<tr>').append($('<td>').html('&nbsp;').attr('colspan', '2'))
+      )
+      return
+    }
+    $.each(result.episodes, function(i, item) {
+      $('#latesttvlist_table_body').append(
+        $('<tr>').append(
+          $('<td>').html(item.label),
+          $('<td>').append($('<div class="pull-right">').html(item.showtitle))
+        )
+      )
+    })
+  })
+}
+
 function loadRecentAlbumsOld() {
   if (!$('#albums-content').length) return
   $.getJSON(WEBDIR + 'kodi/GetRecentAlbums/4', function(data) {
